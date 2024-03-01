@@ -1973,7 +1973,7 @@ public class CofferRenderer implements BlockEntityRenderer<CofferTile> {
     }
 
 
-    public void renderSingleBlock(BlockState p_110913_, PoseStack p_110914_, MultiBufferSource p_110915_, int p_110916_, int p_110917_, net.minecraftforge.client.model.data.IModelData modelData, int color) {
+    public void renderSingleBlock(BlockState p_110913_, PoseStack p_110914_, MultiBufferSource p_110915_, int p_110916_, int p_110917_, net.minecraftforge.client.model.data.ModelData modelData, int color) {
         RenderShape rendershape = p_110913_.getRenderShape();
         if (rendershape != RenderShape.INVISIBLE) {
             switch(rendershape) {

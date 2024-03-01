@@ -46,7 +46,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.model.data.IModelData;
+import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
@@ -275,7 +275,7 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
 
     @NotNull
     @Override
-    public IModelData getModelData() {
+    public ModelData getModelData() {
         return super.getModelData();
     }
 
