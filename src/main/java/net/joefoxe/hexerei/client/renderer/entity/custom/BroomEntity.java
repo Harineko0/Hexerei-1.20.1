@@ -1,19 +1,14 @@
 package net.joefoxe.hexerei.client.renderer.entity.custom;
 
 import net.joefoxe.hexerei.Hexerei;
-import net.joefoxe.hexerei.block.ModBlocks;
 import net.joefoxe.hexerei.client.renderer.entity.ModEntityTypes;
 import net.joefoxe.hexerei.config.ModKeyBindings;
 import net.joefoxe.hexerei.container.BroomContainer;
-import net.joefoxe.hexerei.container.MixingCauldronContainer;
 import net.joefoxe.hexerei.item.ModItems;
 import net.joefoxe.hexerei.particle.ModParticleTypes;
-import net.joefoxe.hexerei.tileentity.CofferTile;
-import net.joefoxe.hexerei.tileentity.MixingCauldronTile;
 import net.joefoxe.hexerei.util.HexereiPacketHandler;
 import net.joefoxe.hexerei.util.HexereiTags;
 import net.joefoxe.hexerei.util.HexereiUtil;
-import net.joefoxe.hexerei.util.IPacket;
 import net.joefoxe.hexerei.util.message.*;
 import net.minecraft.BlockUtil;
 import net.minecraft.client.Minecraft;
@@ -27,6 +22,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ServerboundPaddleBoatPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -43,24 +39,17 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.WaterAnimal;
-import net.minecraft.world.entity.animal.horse.Llama;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.WaterlilyBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.portal.PortalShape;
@@ -71,21 +60,16 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PacketDistributor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.time.LocalDateTime;
-import java.time.temporal.TemporalField;
 import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
 
 public class BroomEntity extends Entity implements Container, MenuProvider{
     private static final EntityDataAccessor<Integer> TIME_SINCE_HIT = SynchedEntityData.defineId(BroomEntity.class, EntityDataSerializers.INT);
@@ -400,7 +384,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
      */
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void animateHurt() {
+    public void animateHurt(float p_265161_) {
         this.setForwardDirection(-this.getForwardDirection());
         this.setTimeSinceHit(10);
         this.setDamageTaken(this.getDamageTaken() * 11.0F);
@@ -437,7 +421,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
     }
 
     public void damageBrush(){
-        this.itemHandler.getStackInSlot(2).hurt(1, new Random(), null);
+        this.itemHandler.getStackInSlot(2).hurt(1, RandomSource.create(), null);
         if (this.itemHandler.getStackInSlot(2).getDamageValue() >= this.itemHandler.getStackInSlot(2).getMaxDamage()) {
             this.itemHandler.setStackInSlot(2, ItemStack.EMPTY);
             this.level().playSound((Player)null, this, SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1.0F, random.nextFloat() * 0.4F + 1.0F);
@@ -445,7 +429,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
         }
     }
     public void damageMisc(){
-        this.itemHandler.getStackInSlot(0).hurt(1, new Random(), null);
+        this.itemHandler.getStackInSlot(0).hurt(1, RandomSource.create(), null);
         if (this.itemHandler.getStackInSlot(0).getDamageValue() >= this.itemHandler.getStackInSlot(0).getMaxDamage()) {
             this.itemHandler.setStackInSlot(0, ItemStack.EMPTY);
             this.level().playSound((Player)null, this, SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1.0F, random.nextFloat() * 0.4F + 1.0F);
@@ -559,7 +543,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
             this.move(MoverType.SELF, this.getDeltaMovement());
 
             if(this.itemHandler.getStackInSlot(2).is(HexereiTags.Items.BROOM_BRUSH)){
-                Random random = new Random();
+                RandomSource random = RandomSource.create();
                 if (random.nextInt(50) == 0) {
                     float rotOffset = random.nextFloat() * 10 - 5;
                     level().addParticle(ModParticleTypes.BROOM.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
@@ -594,7 +578,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
 
                     floatingOffset = moveTo(floatingOffset, 0.05f + (float) Math.sin(((this.age * 2f) + (this.getId() * 1000)) / 30f) * 0.15f, 0.01f);
                 }
-                Random random = new Random();
+                RandomSource random = RandomSource.create();
                 if(random.nextInt(50)==0) {
                     float rotOffset = random.nextFloat() * 10 - 5;
                     level().addParticle(ModParticleTypes.BROOM.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length()/4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
@@ -686,7 +670,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
             }
             else
             {
-                Random random = new Random();
+                RandomSource random = RandomSource.create();
                 if (random.nextInt(5) == 0) {
                     float rotOffset = random.nextFloat() * 10 - 5;
                     level().addParticle(ModParticleTypes.BROOM.get(), getX() - Math.sin(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), getY() + floatingOffset + 0.2f * random.nextFloat() - this.getDeltaMovement().y(), getZ() + Math.cos(((this.getYRot() - 90f + deltaRotation + rotOffset) / 180f) * (Math.PI)) * (1.25f + this.getDeltaMovement().length() / 4), (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d, (random.nextDouble() - 0.5d) * 0.015d);
@@ -847,7 +831,8 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
     private void tickLerp() {
         if (this.isControlledByLocalInstance()) {
             this.lerpSteps = 0;
-            this.setPacketCoordinates(this.getX(), this.getY(), this.getZ());
+
+            this.syncPacketPositionCodec(this.getX(), this.getY(), this.getZ());
         }
 
         if (this.lerpSteps > 0) {
@@ -1186,7 +1171,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
     }
 
     @Override
-    public void positionRider(Entity passenger) {
+    public void positionRider(Entity passenger, MoveFunction function) {
         if (this.hasPassenger(passenger)) {
             float f = 0.0F;
             float f1 = (float)((this.isRemoved() ? (double)0.01F : this.getPassengersRidingOffset()) + passenger.getPassengersRidingOffset());
@@ -1352,7 +1337,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
                 MenuProvider containerProvider = createContainerProvider(level(), blockPosition());
 
 //                NetworkHooks.openGui(((ServerPlayer) player), containerProvider, blockPosition());
-                NetworkHooks.openGui((ServerPlayer) player, containerProvider, b -> b.writeInt(this.getId()));
+                NetworkHooks.openScreen((ServerPlayer) player, containerProvider, b -> b.writeInt(this.getId()));
 
 //                    throw new IllegalStateException("Our Container provider is missing!");
                 return InteractionResult.SUCCESS;
@@ -1518,9 +1503,9 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
      */
     @Nullable
     @Override
-    public Entity getControllingPassenger() {
+    public LivingEntity getControllingPassenger() {
         List<Entity> list = this.getPassengers();
-        return list.isEmpty() ? null : list.get(0);
+        return list.isEmpty() ? null : (LivingEntity) list.get(0);
     }
 
 
@@ -1546,7 +1531,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -1655,7 +1640,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
 
     @Override
     public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.core.Direction facing) {
-        if (this.isAlive() && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        if (this.isAlive() && capability == ForgeCapabilities.ITEM_HANDLER)
             return handler.cast();
         return super.getCapability(capability, facing);
     }
