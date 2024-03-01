@@ -34,7 +34,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -104,7 +104,7 @@ public class Altar extends BaseEntityBlock implements ITileEntity<BookOfShadowsA
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tileentity = level.getBlockEntity(pos);
             if (tileentity instanceof BookOfShadowsAltarTile te) {
-                te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+                te.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
                     if(!h.getStackInSlot(0).isEmpty())
                         level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5f, pos.getY() + 1f, pos.getZ() + 0.5f, h.getStackInSlot(0)));
                 });

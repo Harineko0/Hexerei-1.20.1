@@ -14,7 +14,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.DataSlot;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -39,7 +39,7 @@ public class CofferContainer extends AbstractContainerMenu {
 
         //add slots for mixing cauldron
         if(tileEntity != null) {
-            tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
                 this.addSlot(new SlotItemHandler(h, 0, 15 + (21 * 0), 18));
                 this.addSlot(new SlotItemHandler(h, 1, 15 + (21 * 1), 18));
                 this.addSlot(new SlotItemHandler(h, 2, 15 + (21 * 2), 18));
