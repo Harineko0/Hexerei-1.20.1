@@ -7,16 +7,16 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -44,7 +44,7 @@ public class KeychainItem extends Item {
         CompoundTag compoundtag = tagList.getCompound(0);
         CompoundTag itemTags = tagList.getCompound(0);
 
-        TranslatableComponent itemText = (TranslatableComponent) Component.translatable(ItemStack.of(compoundtag).getDescriptionId()).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x998800)));
+        MutableComponent itemText = (MutableComponent) Component.translatable(ItemStack.of(compoundtag).getDescriptionId()).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x998800)));
 
         if(Screen.hasShiftDown()) {
             tooltip.add(Component.translatable("<%s>", Component.translatable("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAA6600)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
@@ -68,13 +68,14 @@ public class KeychainItem extends Item {
 
 
     @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         super.initializeClient(consumer);
         CustomItemRenderer renderer = createItemRenderer();
         if (renderer != null) {
-            consumer.accept(new IItemRenderProperties() {
+            consumer.accept(new IClientItemExtensions() {
+
                 @Override
-                public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                     return renderer.getRenderer();
                 }
             });
