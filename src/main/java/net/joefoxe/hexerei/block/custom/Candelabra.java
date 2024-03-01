@@ -2,6 +2,7 @@ package net.joefoxe.hexerei.block.custom;
 
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
@@ -260,7 +261,7 @@ public class Candelabra extends Block implements SimpleWaterloggedBlock {
     }
 
     public static void spawnSmokeParticles(Level worldIn, BlockPos pos, boolean spawnExtraSmoke) {
-        Random random = worldIn.getRandom();
+        RandomSource random = worldIn.getRandom();
         SimpleParticleType basicparticletype = ParticleTypes.CAMPFIRE_COSY_SMOKE;
         worldIn.addParticle(basicparticletype, true, (double)pos.getX() + 0.5D + random.nextDouble() / 3.0D * (double)(random.nextBoolean() ? 1 : -1), (double)pos.getY() + random.nextDouble() + random.nextDouble(), (double)pos.getZ() + 0.5D + random.nextDouble() / 3.0D * (double)(random.nextBoolean() ? 1 : -1), 0.0D, 0.07D, 0.0D);
         if (spawnExtraSmoke) {
@@ -325,7 +326,6 @@ public class Candelabra extends Block implements SimpleWaterloggedBlock {
 //        }
 //    }
 
-    @Override
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
         if (state.getValue(LIT)) {
