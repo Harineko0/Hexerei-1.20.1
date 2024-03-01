@@ -296,7 +296,7 @@ public class BookOfShadowsAltarTile extends RandomizableContainerBlockEntity imp
             if(player.getMainHandItem().isEmpty())
                 player.setItemInHand(InteractionHand.MAIN_HAND ,this.itemHandler.getStackInSlot(0).copy());
             else
-                player.inventory.placeItemBackInInventory(this.itemHandler.getStackInSlot(0).copy());
+                player.getInventory().placeItemBackInInventory(this.itemHandler.getStackInSlot(0).copy());
             level.playSound((Player) null, worldPosition, SoundEvents.ITEM_FRAME_REMOVE_ITEM, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.4F + 1.0F);
             this.itemHandler.setStackInSlot(0, ItemStack.EMPTY);
 
