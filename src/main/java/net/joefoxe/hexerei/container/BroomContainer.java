@@ -186,48 +186,66 @@ public class BroomContainer extends AbstractContainerMenu {
                     offset2 = 21;
 
                     for(int i = 0; i < 1; i++)
-                        for(int j = 0; j < 9; j++)
-                            this.slots.get(39 + (i * 9) + j).y = 21 * i + 82;
+                        for(int j = 0; j < 9; j++) {
+                            Slot slot = this.slots.get(39 + (i * 9) + j);
+                            this.slots.set(39 + (i * 9) + j, new Slot(slot.container, slot.getContainerSlot(), slot.x, 21 * i + 82));
+                        }
 
 
                     for(int i = 1; i < 3; i++)
-                        for(int j = 0; j < 9; j++)
-                            this.slots.get(39 + (i * 9) + j).y = -999;
+                        for(int j = 0; j < 9; j++) {
+                            Slot slot = this.slots.get(39 + (i * 9) + j);
+                            this.slots.set(39 + (i * 9) + j, new Slot(slot.container, slot.getContainerSlot(), slot.x, -999));
+                        }
                 }
                 if(broomEntity.itemHandler.getStackInSlot(1).is(HexereiTags.Items.MEDIUM_SATCHELS)) {
                     offset2 = 42;
 
                     for(int i = 0; i < 2; i++)
-                        for(int j = 0; j < 9; j++)
-                            this.slots.get(39 + (i * 9) + j).y = 21 * i + 82;
+                        for(int j = 0; j < 9; j++) {
+                            Slot slot = this.slots.get(39 + (i * 9) + j);
+                            this.slots.set(39 + (i * 9) + j, new Slot(slot.container, slot.getContainerSlot(), slot.x, 21 * i + 82));
+                        }
 
 
                     for(int i = 2; i < 3; i++)
-                        for(int j = 0; j < 9; j++)
-                            this.slots.get(39 + (i * 9) + j).y = -999;
+                        for(int j = 0; j < 9; j++) {
+                            Slot slot = this.slots.get(39 + (i * 9) + j);
+                            this.slots.set(39 + (i * 9) + j, new Slot(slot.container, slot.getContainerSlot(), slot.x, -999));
+                        }
                 }
                 if(broomEntity.itemHandler.getStackInSlot(1).is(HexereiTags.Items.LARGE_SATCHELS)) {
                     offset2 = 63;
 
                     for(int i = 0; i < 3; i++)
-                        for(int j = 0; j < 9; j++)
-                            this.slots.get(39 + (i * 9) + j).y = 21 * i + 82;
+                        for(int j = 0; j < 9; j++) {
+                            Slot slot = this.slots.get(39 + (i * 9) + j);
+                            this.slots.set(39 + (i * 9) + j, new Slot(slot.container, slot.getContainerSlot(), slot.x, 21 * i + 82));
+                        }
 
                 }
 
                 for(int i = 0; i < 3; i++)
-                    for(int j = 0; j < 9; j++)
-                        this.slots.get((i * 9) + j).y = 106 + (i * 18) + offset2;
+                    for(int j = 0; j < 9; j++) {
+                        int index = (i * 9) + j;
+                        Slot slot = this.slots.get(index);
+                        this.slots.set(index, new Slot(slot.container, slot.getContainerSlot(), slot.x, 106 + (i * 18) + offset2));
+                    }
 
-                for(int k = 0; k < 9; k++)
-                    this.slots.get(27 + k).y = 106 + 58 + offset2;
+                for(int k = 0; k < 9; k++) {
+                        int index = 27 + k;
+                        Slot slot = this.slots.get(index);
+                        this.slots.set(index, new Slot(slot.container, slot.getContainerSlot(), slot.x, 106 + 58 + offset2));
+                    }
 
 
                 if(offset2 == 0)
                 {
                     for(int i = 0; i < 3; i++)
-                        for(int j = 0; j < 9; j++)
-                            this.slots.get(39 + (i * 9) + j).y = -999;
+                        for(int j = 0; j < 9; j++) {
+                            Slot slot = this.slots.get(39 + (i * 9) + j);
+                            this.slots.set(39 + (i * 9) + j, new Slot(slot.container, slot.getContainerSlot(), slot.x, -999));
+                        }
                 }
             });
         }
@@ -255,48 +273,72 @@ public class BroomContainer extends AbstractContainerMenu {
             offset = 21;
 
             for(int i = 0; i < 1; i++)
-                for(int j = 0; j < 9; j++)
-                    this.slots.get(39 + (i * 9) + j).y = 21 * i + 82;
+                for(int j = 0; j < 9; j++) {
+                        int index = 39 + (i * 9) + j;
+                        Slot slot = this.slots.get(index);
+                        this.slots.set(index, new Slot(slot.container, slot.getContainerSlot(), slot.x, 21 * i + 82));
+                    }
 
 
             for(int i = 1; i < 3; i++)
-                for(int j = 0; j < 9; j++)
-                    this.slots.get(39 + (i * 9) + j).y = -999;
+                for(int j = 0; j < 9; j++) {
+                        int index = 39 + (i * 9) + j;
+                        Slot slot = this.slots.get(index);
+                        this.slots.set(index, new Slot(slot.container, slot.getContainerSlot(), slot.x, -999));
+                    }
         }
         if(broomEntity.itemHandler.getStackInSlot(1).is(HexereiTags.Items.MEDIUM_SATCHELS)) {
             offset = 42;
 
             for(int i = 0; i < 2; i++)
-                for(int j = 0; j < 9; j++)
-                    this.slots.get(39 + (i * 9) + j).y = 21 * i + 82;
+                for(int j = 0; j < 9; j++) {
+                        int index = 39 + (i * 9) + j;
+                        Slot slot = this.slots.get(index);
+                        this.slots.set(index, new Slot(slot.container, slot.getContainerSlot(), slot.x, 21 * i + 82));
+                    }
 
 
             for(int i = 2; i < 3; i++)
-                for(int j = 0; j < 9; j++)
-                    this.slots.get(39 + (i * 9) + j).y = -999;
+                for(int j = 0; j < 9; j++) {
+                        int index = 39 + (i * 9) + j;
+                        Slot slot = this.slots.get(index);
+                        this.slots.set(index, new Slot(slot.container, slot.getContainerSlot(), slot.x, -999));
+                    }
         }
         if(broomEntity.itemHandler.getStackInSlot(1).is(HexereiTags.Items.LARGE_SATCHELS)) {
             offset = 63;
 
             for(int i = 0; i < 3; i++)
-                for(int j = 0; j < 9; j++)
-                    this.slots.get(39 + (i * 9) + j).y = 21 * i + 82;
+                for(int j = 0; j < 9; j++) {
+                        int index = 39 + (i * 9) + j;
+                        Slot slot = this.slots.get(index);
+                        this.slots.set(index, new Slot(slot.container, slot.getContainerSlot(), slot.x, 21 * i + 82));
+                    }
 
         }
 
         for(int i = 0; i < 3; i++)
-            for(int j = 0; j < 9; j++)
-                this.slots.get((i * 9) + j).y = 106 + (i * 18) + offset;
+            for(int j = 0; j < 9; j++) {
+                int index = (i * 9);
+                Slot slot = this.slots.get(index);
+                this.slots.set(index, new Slot(slot.container, slot.getContainerSlot(), slot.x, 106 + (i * 18) + offset));
+            }
 
-        for(int k = 0; k < 9; k++)
-            this.slots.get(27 + k).y = 106 + 58 + offset;
+        for(int k = 0; k < 9; k++) {
+            int index = 27 + k;
+            Slot slot = this.slots.get(index);
+            this.slots.set(index, new Slot(slot.container, slot.getContainerSlot(), slot.x, 106 + 58 + offset));
+        }
 
 
         if(offset == 0)
         {
             for(int i = 0; i < 3; i++)
-                for(int j = 0; j < 9; j++)
-                    this.slots.get(39 + (i * 9) + j).y = -999;
+                for(int j = 0; j < 9; j++) {
+                        int index = 39 + (i * 9) + j;
+                        Slot slot = this.slots.get(index);
+                        this.slots.set(index, new Slot(slot.container, slot.getContainerSlot(), slot.x, -999));
+                    }
         }
 
 
