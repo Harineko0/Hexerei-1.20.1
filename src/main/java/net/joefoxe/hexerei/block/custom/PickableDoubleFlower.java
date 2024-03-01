@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
@@ -177,15 +178,17 @@ public class PickableDoubleFlower extends DoublePlantBlock implements Bonemealab
         p_57282_.add(AGE).add(HALF);
     }
 
-    public boolean isValidBonemealTarget(BlockGetter p_57260_, BlockPos p_57261_, BlockState p_57262_, boolean p_57263_) {
-        return p_57262_.getValue(AGE) < 3;
+    @Override
+    public boolean isValidBonemealTarget(LevelReader p_256559_, BlockPos p_50898_, BlockState p_50899_, boolean p_50900_) {
+        return p_50899_.getValue(AGE) < 3;
     }
 
-    public boolean isBonemealSuccess(Level p_57265_, Random p_57266_, BlockPos p_57267_, BlockState p_57268_) {
+    @Override
+    public boolean isBonemealSuccess(Level p_220878_, RandomSource p_220879_, BlockPos p_220880_, BlockState p_220881_) {
         return true;
     }
 
-    public void performBonemeal(ServerLevel level, Random random, BlockPos blockPos, BlockState blockState) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos blockPos, BlockState blockState) {
 
 
         if(blockState.getValue(HALF) == DoubleBlockHalf.LOWER) {

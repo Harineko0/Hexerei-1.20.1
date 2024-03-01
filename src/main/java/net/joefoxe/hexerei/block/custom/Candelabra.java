@@ -326,8 +326,9 @@ public class Candelabra extends Block implements SimpleWaterloggedBlock {
 //        }
 //    }
 
+    @Override
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
         if (state.getValue(LIT)) {
             if (rand.nextInt(10) == 0) {
                 world.playSound(null,(double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 0.5F + rand.nextFloat()/2, rand.nextFloat() * 0.7F + 0.6F);

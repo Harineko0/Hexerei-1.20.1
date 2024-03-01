@@ -12,6 +12,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerLevel;
@@ -152,8 +153,8 @@ public class SageBurningPlate extends Block implements ITileEntity<SageBurningPl
         if(Screen.hasShiftDown()) {
             tooltip.add(Component.translatable("<%s>", Component.translatable("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAA6600)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
 
-            TranslatableComponent string = (TranslatableComponent) Component.translatable(HexConfig.SAGE_BURNING_PLATE_RANGE.get() + "").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAA6600)));
-            TranslatableComponent itemText = (TranslatableComponent) Component.translatable(ModItems.DRIED_SAGE_BUNDLE.get().getDescriptionId()).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x998800)));
+            MutableComponent string = (MutableComponent) Component.translatable(HexConfig.SAGE_BURNING_PLATE_RANGE.get() + "").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAA6600)));
+            MutableComponent itemText = (MutableComponent) Component.translatable(ModItems.DRIED_SAGE_BUNDLE.get().getDescriptionId()).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x998800)));
 
             tooltip.add(Component.translatable("tooltip.hexerei.sage_burning_plate_shift_1", itemText).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
             tooltip.add(Component.translatable("tooltip.hexerei.sage_burning_plate_shift_2").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));

@@ -64,11 +64,11 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.extensions.IForgeBlock;
 import net.minecraftforge.common.extensions.IForgeBlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.network.NetworkHooks;
@@ -173,7 +173,7 @@ public class MixingCauldron extends BaseEntityBlock implements ITileEntity<Mixin
         Random random = new Random();
         ItemStack fillStack = stack.copy();
         fillStack.setCount(1);
-        LazyOptional<IFluidHandlerItem> fluidHandlerOptional = fillStack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY);
+        LazyOptional<IFluidHandlerItem> fluidHandlerOptional = fillStack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM);
         if (fluidHandlerOptional.isPresent()) {
             BlockEntity tileEntity = world.getBlockEntity(pos);
             if (tileEntity instanceof MixingCauldronTile) {
@@ -465,7 +465,7 @@ public class MixingCauldron extends BaseEntityBlock implements ITileEntity<Mixin
             if (tileEntity instanceof MixingCauldronTile) {
                 MenuProvider containerProvider = createContainerProvider(world, pos);
 
-                NetworkHooks.openGui(((ServerPlayer) player), containerProvider, tileEntity.getBlockPos());
+                NetworkHooks.openScreen(((ServerPlayer) player), containerProvider, tileEntity.getBlockPos());
 
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
@@ -489,7 +489,7 @@ public class MixingCauldron extends BaseEntityBlock implements ITileEntity<Mixin
 //    public void playerWillDestroy(Level worldIn, BlockPos pos, BlockState state, Player player) {
 //        MixingCauldronTile te = (MixingCauldronTile) worldIn.getBlockEntity(pos);
 //
-//        te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+//        te.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(h -> {
 //
 //            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(0)));
 //            worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX() + 0.5f, pos.getY() - 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(1)));
@@ -516,7 +516,7 @@ public class MixingCauldron extends BaseEntityBlock implements ITileEntity<Mixin
             if (tileentity != null) {
                 MixingCauldronTile te = (MixingCauldronTile) level.getBlockEntity(pos);
 
-                te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+                te.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
 
                     level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(0)));
                     level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, h.getStackInSlot(1)));
@@ -537,7 +537,7 @@ public class MixingCauldron extends BaseEntityBlock implements ITileEntity<Mixin
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
 
         // get slots and animate particles based off number of items in the cauldron and based off the level and fluid type
         float height = MIN_Y;

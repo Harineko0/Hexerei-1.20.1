@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.DyeColor;
@@ -52,8 +53,7 @@ import net.minecraft.world.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ClientRegistry;
-import net.minecraftforge.client.IBlockRenderProperties;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -125,7 +125,7 @@ public class HerbJar extends Block implements ITileEntity<HerbJarTile>, EntityBl
             if(!worldIn.isClientSide()) {
                 if (tileEntity instanceof HerbJarTile) {
                     MenuProvider containerProvider = createContainerProvider(worldIn, pos, getCloneItemStack(worldIn, pos, state));
-                    NetworkHooks.openGui(((ServerPlayer) player), containerProvider, b -> b.writeBlockPos(tileEntity.getBlockPos()).writeItem(getCloneItemStack(worldIn, pos, state)));
+                    NetworkHooks.openScreen(((ServerPlayer) player), containerProvider, b -> b.writeBlockPos(tileEntity.getBlockPos()).writeItem(getCloneItemStack(worldIn, pos, state)));
                 } else {
                     throw new IllegalStateException("Our Container provider is missing!");
                 }
@@ -168,7 +168,7 @@ public class HerbJar extends Block implements ITileEntity<HerbJarTile>, EntityBl
 
     @Override
     public void attack(BlockState state, Level worldIn, BlockPos pos, Player playerIn) {
-        BlockHitResult rayResult = rayTraceEyeLevel(worldIn, playerIn, playerIn.getAttribute(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get()).getValue() + 1);
+        BlockHitResult rayResult = rayTraceEyeLevel(worldIn, playerIn, playerIn.getAttribute(ForgeMod.ENTITY_REACH.get()).getValue() + 1);
         if (rayResult.getType() == HitResult.Type.MISS)
             return;
 
@@ -191,7 +191,7 @@ public class HerbJar extends Block implements ITileEntity<HerbJarTile>, EntityBl
         }
 
         if (!item.isEmpty()) {
-            if (!playerIn.inventory.add(item)) {
+            if (!playerIn.getInventory().add(item)) {
                 dropItemStack(worldIn, pos.relative(side), playerIn, item);
                 worldIn.sendBlockUpdated(pos, state, state, 3);
             }
@@ -358,7 +358,7 @@ public class HerbJar extends Block implements ITileEntity<HerbJarTile>, EntityBl
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
     }
 
     private MenuProvider createContainerProvider(Level worldIn, BlockPos pos, ItemStack stack) {
