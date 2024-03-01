@@ -1,4 +1,5 @@
 package net.joefoxe.hexerei.particle;
+
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -6,7 +7,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
-import java.awt.*;
 import java.util.Random;
 
 @OnlyIn(Dist.CLIENT)
@@ -65,9 +65,9 @@ public class BroomParticle extends TextureSheetParticle {
             BroomParticle broomParticle = new BroomParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
             broomParticle.pickSprite(this.spriteSet);
             broomParticle.setColor(0.6f + colorOffset,0.6f + colorOffset,0.6f + colorOffset);
-            if(this.spriteSet.get(0,1).getName().getPath().toString().matches("particle/broom_particle_4") ||
-                  this.spriteSet.get(0,1).getName().getPath().toString().matches("particle/broom_particle_5") ||
-                      this.spriteSet.get(0,1).getName().getPath().toString().matches("particle/broom_particle_6")) {
+            if(this.spriteSet.get(0,1).contents().name().getPath().matches("particle/broom_particle_4") ||
+                  this.spriteSet.get(0,1).contents().name().getPath().matches("particle/broom_particle_5") ||
+                      this.spriteSet.get(0,1).contents().name().getPath().matches("particle/broom_particle_6")) {
                 broomParticle.lifetime += broomParticle.lifetime * 3 + 30;
             }
 
