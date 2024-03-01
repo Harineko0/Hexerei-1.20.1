@@ -47,7 +47,7 @@ public class CrowFluteClearCrowListToServer {
             }
             else {
                 if (ctx.get().getSender() == null) return;
-                world = ctx.get().getSender().level;
+                world = ctx.get().getSender().level();
             }
 
             if(packet.hand == 0) {

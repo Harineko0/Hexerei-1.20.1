@@ -5,7 +5,6 @@ import com.electronwill.nightconfig.core.io.WritingMode;
 import net.joefoxe.hexerei.Hexerei;
 import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;

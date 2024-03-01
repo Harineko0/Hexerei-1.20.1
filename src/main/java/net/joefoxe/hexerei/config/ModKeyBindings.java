@@ -5,7 +5,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.sun.java.accessibility.util.Translator;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraftforge.client.ClientRegistry;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
