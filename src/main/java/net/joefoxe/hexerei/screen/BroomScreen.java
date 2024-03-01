@@ -14,21 +14,27 @@ import net.joefoxe.hexerei.util.HexereiTags;
 import net.joefoxe.hexerei.util.message.BroomSyncFloatModeToServer;
 import net.joefoxe.hexerei.util.message.BroomSyncPacket;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.model.geometry.UnbakedGeometryHelper;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.ArrayList;
@@ -70,13 +76,13 @@ public class BroomScreen extends AbstractContainerScreen<BroomContainer> {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 
 
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
-        this.renderButtonTooltip(matrixStack, mouseX, mouseY);
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        this.renderButtonTooltip(guiGraphics, mouseX, mouseY);
     }
 
     @Override
@@ -92,7 +98,7 @@ public class BroomScreen extends AbstractContainerScreen<BroomContainer> {
 
 
 
-    public void renderButtonTooltip(PoseStack matrixStack, int mouseX, int mouseY){
+    public void renderButtonTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY){
 
         int offset = 0;
         if(broomEntity.itemHandler.getStackInSlot(1).is(HexereiTags.Items.SMALL_SATCHELS))
@@ -122,7 +128,7 @@ public class BroomScreen extends AbstractContainerScreen<BroomContainer> {
         List<Component> components = new ArrayList<>();
         if (isHovering((double)mouseX, (double)mouseY, 188.25D, 89 + offset, 18D, 18D)) {
             components.add(Component.translatable("tooltip.hexerei.broom_settings"));
-            this.renderTooltip(matrixStack, components, Optional.empty(), mouseX, mouseY, Minecraft.getInstance().font, ItemStack.EMPTY);
+            this.renderTooltip(guiGraphics, mouseX, mouseY);
         }
         else if(dropdownOffset > 29){
             if (isHovering((double)mouseX, (double)mouseY, 188.25D, 88 + offset + ((int)dropdownOffset), 18D, 18D)) {
@@ -134,7 +140,7 @@ public class BroomScreen extends AbstractContainerScreen<BroomContainer> {
                 else {
                     components.add(Component.translatable("[%s]", Component.translatable("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAAAA00)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
                 }
-                this.renderTooltip(matrixStack, components, Optional.empty(), mouseX, mouseY, Minecraft.getInstance().font, ItemStack.EMPTY);
+                this.renderTooltip(guiGraphics, mouseX, mouseY);
             }
 
             if (isHovering((double)mouseX, (double)mouseY, 188.25D, 60 + offset + ((int)dropdownOffset), 18D, 18D)) {
@@ -147,7 +153,7 @@ public class BroomScreen extends AbstractContainerScreen<BroomContainer> {
                 else {
                     components.add(Component.translatable("[%s]", Component.translatable("tooltip.hexerei.shift").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAAAA00)))).withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
                 }
-                this.renderTooltip(matrixStack, components, Optional.empty(), mouseX, mouseY, Minecraft.getInstance().font, ItemStack.EMPTY);
+                this.renderTooltip(guiGraphics, mouseX, mouseY);
             }
         }
 
@@ -157,7 +163,7 @@ public class BroomScreen extends AbstractContainerScreen<BroomContainer> {
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, GUI);
@@ -175,52 +181,52 @@ public class BroomScreen extends AbstractContainerScreen<BroomContainer> {
             offset = 63;
         inventoryLabelY = 94 + offset;
 
-        this.blit(matrixStack, i + 184, j + 55 + offset + ((int)dropdownOffset), 184, 137, 26, 58);
+        guiGraphics.blit(GUI, i + 184, j + 55 + offset + ((int)dropdownOffset), 184, 137, 26, 58);
         if(this.menu.getFloatMode())
         {
-            this.blit(matrixStack, i + 188, j + 60 + offset + ((int)dropdownOffset), 238, 106, 18, 18);
+            guiGraphics.blit(GUI, i + 188, j + 60 + offset + ((int)dropdownOffset), 238, 106, 18, 18);
         }
         else
         {
-            this.blit(matrixStack, i + 188, j + 88 + offset + ((int)dropdownOffset), 238, 70, 18, 18);
+            guiGraphics.blit(GUI, i + 188, j + 88 + offset + ((int)dropdownOffset), 238, 70, 18, 18);
         }
 
-        this.blit(matrixStack, i, j - 3, 0, 0, 214, 82);
-        this.blit(matrixStack, i, j + 79 + offset, 0, 82, 214, 34);
+        guiGraphics.blit(GUI, i, j - 3, 0, 0, 214, 82);
+        guiGraphics.blit(GUI, i, j + 79 + offset, 0, 82, 214, 34);
 
 
 
 
         if(!broomEntity.itemHandler.getStackInSlot(0).isEmpty())
-            this.blit(matrixStack, i + 37, j + 47, 235, 31, 16, 16);
+            guiGraphics.blit(GUI, i + 37, j + 47, 235, 31, 16, 16);
         if(!broomEntity.itemHandler.getStackInSlot(1).isEmpty())
-            this.blit(matrixStack, i + 99, j + 47, 235, 31, 16, 16);
+            guiGraphics.blit(GUI, i + 99, j + 47, 235, 31, 16, 16);
         if(!broomEntity.itemHandler.getStackInSlot(2).isEmpty())
-            this.blit(matrixStack, i + 160, j + 47, 235, 31, 16, 16);
+            guiGraphics.blit(GUI, i + 160, j + 47, 235, 31, 16, 16);
 
         if(broomEntity.itemHandler.getStackInSlot(1).is(HexereiTags.Items.SMALL_SATCHELS)) {
-            this.blit(matrixStack, i, j + 79, 0, 116, 214, 21);
+            guiGraphics.blit(GUI, i, j + 79, 0, 116, 214, 21);
         }
 
         if(broomEntity.itemHandler.getStackInSlot(1).is(HexereiTags.Items.MEDIUM_SATCHELS)) {
-            this.blit(matrixStack, i, j + 79, 0, 116, 214, 21);
-            this.blit(matrixStack, i, j + 79 + 21, 0, 116, 214, 21);
+            guiGraphics.blit(GUI, i, j + 79, 0, 116, 214, 21);
+            guiGraphics.blit(GUI, i, j + 79 + 21, 0, 116, 214, 21);
         }
 
         if(broomEntity.itemHandler.getStackInSlot(1).is(HexereiTags.Items.LARGE_SATCHELS)) {
-            this.blit(matrixStack, i, j + 79, 0, 116, 214, 21);
-            this.blit(matrixStack, i, j + 79 + 21, 0, 116, 214, 21);
-            this.blit(matrixStack, i, j + 79 + 42, 0, 116, 214, 21);
+            guiGraphics.blit(GUI, i, j + 79, 0, 116, 214, 21);
+            guiGraphics.blit(GUI, i, j + 79 + 21, 0, 116, 214, 21);
+            guiGraphics.blit(GUI, i, j + 79 + 42, 0, 116, 214, 21);
         }
 
 
-        this.blit(matrixStack, i + 94, j - 30, 230, 0, 26, 26);
+        guiGraphics.blit(GUI, i + 94, j - 30, 230, 0, 26, 26);
 
         if(this.dropdownClicked)
-            this.blit(matrixStack, i + 188, j + 89 + offset, 238, 124, 18, 18);
+            guiGraphics.blit(GUI, i + 188, j + 89 + offset, 238, 124, 18, 18);
 
         RenderSystem.setShaderTexture(0, INVENTORY);
-        this.blit(matrixStack, i + 3, j + 88 + offset, 0, 0, 176, 100);
+        guiGraphics.blit(GUI, i + 3, j + 88 + offset, 0, 0, 176, 100);
 
 
 
@@ -233,18 +239,24 @@ public class BroomScreen extends AbstractContainerScreen<BroomContainer> {
 
 
         RenderSystem.disableDepthTest();
-        itemRenderer.renderGuiItem(broomEntity.getCloneItemStack(),
-                this.leftPos + 99,
-                this.topPos - 25);
+        PoseStack poseStack = new PoseStack();
+        poseStack.translate(this.leftPos + 99, this.topPos - 25, 0);
+        ItemStack stack = broomEntity.getCloneItemStack();
+        BakedModel model = itemRenderer.getModel(stack, null, null, 0);
+        int brightness = 0x00F000F0;
+        itemRenderer.render(stack, ItemDisplayContext.GUI, false,
+                guiGraphics.pose(),
+                guiGraphics.bufferSource(),
+                brightness, OverlayTexture.NO_OVERLAY, model);
 
 //        matrixStack.translate(this.leftPos + 42*1.666f, this.topPos + 14*1.666f, 0f);
-        TranslatableComponent misc = Component.translatable("tooltip.hexerei.broom_misc");
-        TranslatableComponent satchel = Component.translatable("tooltip.hexerei.broom_satchel");
-        TranslatableComponent brush = Component.translatable("tooltip.hexerei.broom_brush");
+        MutableComponent misc = Component.translatable("tooltip.hexerei.broom_misc");
+        MutableComponent satchel = Component.translatable("tooltip.hexerei.broom_satchel");
+        MutableComponent brush = Component.translatable("tooltip.hexerei.broom_brush");
 
-        minecraft.font.draw(matrixStack, misc, this.leftPos + 34, this.topPos + 29, 0xFF606060);
-        minecraft.font.draw(matrixStack, satchel, this.leftPos + 89, this.topPos + 29, 0xFF606060);
-        minecraft.font.draw(matrixStack, brush, this.leftPos + 154, this.topPos + 29, 0xFF606060);
+        guiGraphics.drawString(minecraft.font,misc, this.leftPos + 34, this.topPos + 29, 0xFF606060);
+        guiGraphics.drawString(minecraft.font,satchel, this.leftPos + 89, this.topPos + 29, 0xFF606060);
+        guiGraphics.drawString(minecraft.font,brush, this.leftPos + 154, this.topPos + 29, 0xFF606060);
 //        InventoryScreen.renderEntityInInventory(this.leftPos + 107, this.topPos + 88, 20, (float)(this.leftPos + 107 - x) , (float)(this.topPos + 88 - 30 - y), (LivingEntity) broomEntity);
 //
 //        RenderSystem.enableDepthTest();
