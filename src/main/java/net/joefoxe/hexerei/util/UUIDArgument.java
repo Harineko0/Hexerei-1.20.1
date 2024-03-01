@@ -6,17 +6,17 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
+import net.minecraft.network.chat.Component;
 
-import net.minecraft.network.chat.TranslatableComponent;
 
 public class UUIDArgument implements ArgumentType<UUID> {
 
     public static final DynamicCommandExceptionType UUID_SECTION_INVALID = new DynamicCommandExceptionType((arg) -> {
-        return new TranslatableComponent("argument.hexerei.uuid.section.invalid", arg);
+        return Component.translatable("argument.hexerei.uuid.section.invalid", arg);
     });
 
     public static final DynamicCommandExceptionType UUID_FORMAT_INVALID = new DynamicCommandExceptionType((arg) -> {
-        return new TranslatableComponent("argument.hexerei.uuid.format.invalid", arg);
+        return Component.translatable("argument.hexerei.uuid.format.invalid", arg);
     });
 
     public static UUIDArgument uuid() {

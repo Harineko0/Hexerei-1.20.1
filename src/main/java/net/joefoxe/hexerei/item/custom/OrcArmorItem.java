@@ -56,9 +56,9 @@
 //    @Override
 //    public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flagIn) {
 //        if(Screen.hasShiftDown()) {
-//            tooltip.add(new TranslatableComponent("tooltip.hexerei.orc_armor_shift"));
+//            tooltip.add(Component.translatable("tooltip.hexerei.orc_armor_shift"));
 //        } else {
-//            tooltip.add(new TranslatableComponent("tooltip.hexerei.orc_armor"));
+//            tooltip.add(Component.translatable("tooltip.hexerei.orc_armor"));
 //        }
 //        super.appendHoverText(stack, world, tooltip, flagIn);
 //    }

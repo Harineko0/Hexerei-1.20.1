@@ -17,7 +17,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.*;
@@ -238,7 +237,7 @@ public class ModBlocks {
                 @Override
                 public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
 
-                    tooltip.add(new TranslatableComponent("tooltip.hexerei.found_in_swamp").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                    tooltip.add(Component.translatable("tooltip.hexerei.found_in_swamp").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
                     super.appendHoverText(stack, world, tooltip, flagIn);
                 }
             });
@@ -250,7 +249,7 @@ public class ModBlocks {
                 @Override
                 public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
 
-                    tooltip.add(new TranslatableComponent("tooltip.hexerei.found_in_swamp").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                    tooltip.add(Component.translatable("tooltip.hexerei.found_in_swamp").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
                     super.appendHoverText(stack, world, tooltip, flagIn);
                 }
             });
@@ -264,7 +263,7 @@ public class ModBlocks {
                 @Override
                 public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
 
-                    tooltip.add(new TranslatableComponent("tooltip.hexerei.found_in_swamp").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                    tooltip.add(Component.translatable("tooltip.hexerei.found_in_swamp").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
                     super.appendHoverText(stack, world, tooltip, flagIn);
                 }
             });
@@ -276,7 +275,7 @@ public class ModBlocks {
                 @Override
                 public void appendHoverText(ItemStack stack, @Nullable BlockGetter world, List<Component> tooltip, TooltipFlag flagIn) {
 
-                    tooltip.add(new TranslatableComponent("tooltip.hexerei.found_in_swamp").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
+                    tooltip.add(Component.translatable("tooltip.hexerei.found_in_swamp").withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0x999999))));
                     super.appendHoverText(stack, world, tooltip, flagIn);
                 }
             });

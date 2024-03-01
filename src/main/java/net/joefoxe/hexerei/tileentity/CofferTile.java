@@ -40,13 +40,11 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.client.model.data.IModelData;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -192,7 +190,7 @@ public class CofferTile extends RandomizableContainerBlockEntity implements Clea
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container." + Hexerei.MOD_ID + ".coffer");
+        return Component.translatable("container." + Hexerei.MOD_ID + ".coffer");
     }
 
     @Override

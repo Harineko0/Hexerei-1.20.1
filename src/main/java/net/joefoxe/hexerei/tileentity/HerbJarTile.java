@@ -43,14 +43,12 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -142,7 +140,7 @@ public class HerbJarTile extends RandomizableContainerBlockEntity implements Cle
 
     @Override
     protected Component getDefaultName() {
-        return new TranslatableComponent("container." + Hexerei.MOD_ID + ".herb_jar");
+        return Component.translatable("container." + Hexerei.MOD_ID + ".herb_jar");
     }
 
 //    public HerbJarTile() {
@@ -316,7 +314,7 @@ public class HerbJarTile extends RandomizableContainerBlockEntity implements Cle
     @Override
     public Component getDisplayName() {
         return customName != null ? customName
-                : new TranslatableComponent("");
+                : Component.translatable("");
     }
 
     @Nonnull
