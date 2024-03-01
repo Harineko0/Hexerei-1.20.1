@@ -226,7 +226,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
     public boolean hurt(DamageSource source, float amount) {
         if (this.isInvulnerableTo(source)) {
             return false;
-        } else if (!this.level.isClientSide && !this.isRemoved()) {
+        } else if (!this.level().isClientSide && !this.isRemoved()) {
             this.setForwardDirection(-this.getForwardDirection());
             this.setTimeSinceHit(10);
             this.setDamageTaken(this.getDamageTaken() + amount * 10.0F);
@@ -235,7 +235,7 @@ public class BroomEntity extends Entity implements Container, MenuProvider{
             if (flag || this.getDamageTaken() > 50.0F) {
                 if (!flag) {
 //                    this.spawnAtLocation(this.getItemBoat());
-                    level.addFreshEntity(new ItemEntity(level, blockPosition().getX() + 0.5f, blockPosition().getY() + 0.5f, blockPosition().getZ() + 0.5f, getCloneItemStack()));
+                    level().addFreshEntity(new ItemEntity(level(), blockPosition().getX() + 0.5f, blockPosition().getY() + 0.5f, blockPosition().getZ() + 0.5f, getCloneItemStack()));
                 }
 
                 this.remove(RemovalReason.DISCARDED);

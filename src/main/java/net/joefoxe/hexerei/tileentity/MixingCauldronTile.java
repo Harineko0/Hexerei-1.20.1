@@ -441,7 +441,7 @@ public class MixingCauldronTile extends RandomizableContainerBlockEntity impleme
                                 this.getFluidStack().grow(1);
                             setChanged();
                         }
-                        entity.getLevel().playSound((Player)null, entity.blockPosition(), SoundEvents.HONEY_DRINK, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        entity.level().playSound((Player)null, entity.blockPosition(), SoundEvents.HONEY_DRINK, SoundSource.BLOCKS, 1.0F, 1.0F);
                         if(!level.isClientSide)
                             HexereiPacketHandler.instance.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(worldPosition)), new EmitParticlesPacket(worldPosition, 2, true));
 

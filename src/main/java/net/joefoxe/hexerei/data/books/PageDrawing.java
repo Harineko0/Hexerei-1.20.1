@@ -2576,12 +2576,12 @@ public class PageDrawing {
 
 
                     for(int j = 0; j < 6; j++){
-                        BlockHitResult raytrace = getPlayerPOVHitResult(j, playerIn.level, playerIn, ClipContext.Fluid.NONE);
+                        BlockHitResult raytrace = getPlayerPOVHitResult(j, playerIn.level(), playerIn, ClipContext.Fluid.NONE);
                         if(raytrace.getType() != HitResult.Type.MISS) {
                             BlockPos pos = raytrace.getBlockPos();
 
 
-                            BlockEntity blockEntity = playerIn.level.getBlockEntity(pos);
+                            BlockEntity blockEntity = playerIn.level().getBlockEntity(pos);
                             if(blockEntity instanceof BookOfShadowsAltarTile altarTile && altarTile.turnPage == 0 && altarTile.slotClicked != -1){
 
 
@@ -2799,11 +2799,11 @@ public class PageDrawing {
                 return;
 
             for(int l = 0; l < 6; l++) {
-                BlockHitResult raytrace = getPlayerPOVHitResult(l, playerIn.level, playerIn, ClipContext.Fluid.NONE);
+                BlockHitResult raytrace = getPlayerPOVHitResult(l, playerIn.level(), playerIn, ClipContext.Fluid.NONE);
                 if (raytrace.getType() != HitResult.Type.MISS) {
                     BlockPos pos = raytrace.getBlockPos();
 
-                    BlockEntity blockEntity = playerIn.level.getBlockEntity(pos);
+                    BlockEntity blockEntity = playerIn.level().getBlockEntity(pos);
                     if(blockEntity instanceof BookOfShadowsAltarTile altarTile && altarTile.turnPage == 0){
 
                         CompoundTag tag = altarTile.itemHandler.getStackInSlot(0).getOrCreateTag();
@@ -2960,12 +2960,12 @@ public class PageDrawing {
 
 
             for(int i = 0; i < 6; i++){
-                BlockHitResult raytrace = getPlayerPOVHitResult(i, playerIn.level, playerIn, ClipContext.Fluid.NONE);
+                BlockHitResult raytrace = getPlayerPOVHitResult(i, playerIn.level(), playerIn, ClipContext.Fluid.NONE);
                 if(raytrace.getType() != HitResult.Type.MISS) {
                     BlockPos pos = raytrace.getBlockPos();
 
 
-                    BlockEntity blockEntity = playerIn.level.getBlockEntity(pos);
+                    BlockEntity blockEntity = playerIn.level().getBlockEntity(pos);
                     if(blockEntity instanceof BookOfShadowsAltarTile altarTile && altarTile.turnPage == 0){
 
                         if(altarTile.slotClicked != -1){

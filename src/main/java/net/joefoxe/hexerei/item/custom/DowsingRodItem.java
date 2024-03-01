@@ -168,7 +168,7 @@ public class DowsingRodItem extends Item {
 
         this.playerPos = player.blockPosition();
         // If we are in a valid spot, we point to ourselves.
-        BlockPos coordinates = getChunkCoordinates(pos1, player.level, biome);
+        BlockPos coordinates = getChunkCoordinates(pos1, player.level(), biome);
         if (coordinates != null) {
             angleI = 0;
             radiusI = 0;
@@ -197,7 +197,7 @@ public class DowsingRodItem extends Item {
 
             BlockPos pos = playerPos.offset(Math.round((float) (distBetweenChecks * (radiusI + 1) * Math.cos(angle))), 0, Math.round((float) (distBetweenChecks * (radiusI + 1) * Math.sin(angle))));
 
-            coordinates = getChunkCoordinates(pos, player.level, biome);
+            coordinates = getChunkCoordinates(pos, player.level(), biome);
             if (coordinates != null) {
                 angleI = 0;
                 radiusI = 0;

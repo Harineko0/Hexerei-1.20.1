@@ -345,7 +345,7 @@ public class BroomContainer extends AbstractContainerMenu {
     }
 
     public void playSound() {
-        this.broomEntity.getLevel().playSound((Player)null, this.broomEntity.blockPosition(), SoundEvents.UI_BUTTON_CLICK, SoundSource.BLOCKS, 1.0F, 1.0F);;
+        this.broomEntity.level().playSound((Player)null, this.broomEntity.blockPosition(), SoundEvents.UI_BUTTON_CLICK, SoundSource.BLOCKS, 1.0F, 1.0F);;
     }
 
     public boolean getFloatMode() {
