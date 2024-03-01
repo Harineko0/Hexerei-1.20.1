@@ -31,7 +31,7 @@ public class SeedMixtureItem extends Item {
 //            entityLiving.curePotionEffects(new ItemStack(Items.MILK_BUCKET));
 //            if (itemstack.isEmpty()) {
 //                player.setItemInHand(InteractionHand.MAIN_HAND, itemstack3);
-//            } else if (!player.inventory.add(itemstack3)) {
+//            } else if (!player.getInventory().add(itemstack3)) {
 //                player.drop(itemstack3, false);
 //            } else if (player instanceof ServerPlayer) {
 //                player.initMenu(player.containerMenu);
